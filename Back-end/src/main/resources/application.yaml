@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: project-back-end
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.jdbc.lab.non_contextual_creation: true
+    generate-ddl: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/billingProject
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  mail:
+    host: smtp-mail.outlook.com
+    port: 587
+    username: librarytestapi@outlook.com
+    password: JCeAUonGqymjru
+    properties:
+      mail:
+        tls: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp-mail.outlook.com
+
+app:
+  mail:
+    late-bill:
+      message: Attention! You have a debt due soon
+    default-mailSender: librarytestapi@outlook.com
