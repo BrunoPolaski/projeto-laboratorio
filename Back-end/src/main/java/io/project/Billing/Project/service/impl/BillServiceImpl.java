@@ -2,6 +2,7 @@ package io.project.Billing.Project.service.impl;
 
 import io.project.Billing.Project.dto.BillDTO;
 import io.project.Billing.Project.dto.BillInsertDTO;
+import io.project.Billing.Project.exception.ResourceNotFoundException;
 import io.project.Billing.Project.model.entities.Bill;
 import io.project.Billing.Project.model.repositories.BillRepository;
 import io.project.Billing.Project.service.BillService;
@@ -30,7 +31,7 @@ public class BillServiceImpl implements BillService {
     @Override
     public void updateBillStatus(Long billId) {
         var bill = repository.findById(billId)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Bill not found with id: " + billId));
 
         bill.setPaidOff(true);
         repository.save(bill);

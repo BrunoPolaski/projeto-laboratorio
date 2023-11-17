@@ -40,6 +40,7 @@ public class BillController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void updateBillStatus(@PathVariable Long id) {
         service.updateBillStatus(id);
     }
