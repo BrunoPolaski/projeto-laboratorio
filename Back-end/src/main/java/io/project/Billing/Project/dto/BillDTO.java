@@ -13,9 +13,9 @@ public class BillDTO {
 
     private Long id;
     private String email;
+    private BigDecimal totalValue;
     private Long numberOfInstallments;
-    private BigDecimal installmentValue;
-    private boolean isPaidOff;
+    private boolean paidOff;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
 
@@ -23,9 +23,9 @@ public class BillDTO {
         return BillDTO.builder()
                 .id(entity.getId())
                 .email(entity.getEmail())
+                .totalValue(entity.getTotalValue())
                 .numberOfInstallments(entity.getNumberOfInstallments())
-                .installmentValue(entity.getInstallmentValue())
-                .isPaidOff(entity.isPaidOff())
+                .paidOff(entity.isPaidOff())
                 .createdAt(entity.getCreatedAt())
                 .dueDate(entity.getDueDate())
                 .build();

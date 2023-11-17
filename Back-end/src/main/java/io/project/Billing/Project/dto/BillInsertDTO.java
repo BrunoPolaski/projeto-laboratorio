@@ -10,13 +10,17 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class BillInsertDTO {
 
-    private Long id;
+    @NotEmpty
+    private String debtor;
 
     @NotEmpty
     private String email;
+
+    @NotEmpty
+    private BigDecimal totalValue;
+
     @NotEmpty
     private Long numberOfInstallments;
-    @NotEmpty
-    private BigDecimal installmentValue;
+
 
 }

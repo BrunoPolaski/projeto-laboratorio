@@ -18,19 +18,21 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String debtor;
     private String email;
+    private BigDecimal totalValue;
     private Long numberOfInstallments;
-    private BigDecimal installmentValue;
-    private boolean isPaidOff;
+    private boolean paidOff;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
 
     public static Bill of(BillInsertDTO request) {
         return Bill.builder()
+                .debtor(request.getDebtor())
                 .email(request.getEmail())
+                .totalValue(request.getTotalValue())
                 .numberOfInstallments(request.getNumberOfInstallments())
-                .installmentValue(request.getInstallmentValue())
-                .isPaidOff(false)
+                .paidOff(false)
                 .createdAt(LocalDateTime.now())
                 .dueDate(LocalDateTime.now().plusMonths(1L))
                 .build();
