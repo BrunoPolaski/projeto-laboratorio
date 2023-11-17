@@ -1,7 +1,7 @@
 # projeto-laboratorio
 Solucionar o problema de contas a receber de uma perfumaria
 
-##IDEIA
+## IDEIA
 via notificação no dispositivo do cliente e do dono
 notificar quanto deve (pro cliente) e quanto deve receber (dono)
 dono coloca email dele e email do cliente
@@ -10,7 +10,7 @@ coloca a validade da parcela
 coloca condição de pagamento
 final do mês fazer insight
 
-##VISANDO
+## VISANDO
 melhorar fluxo de caixa
 reduzir inadimplência
 aumentar lucratividade
