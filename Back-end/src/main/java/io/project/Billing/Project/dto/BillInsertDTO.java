@@ -1,5 +1,6 @@
 package io.project.Billing.Project.dto;
 
+import io.project.Billing.Project.model.PaymentMode;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
@@ -15,6 +16,9 @@ public class BillInsertDTO {
 
     @NotEmpty
     private String email;
+
+    @NotEmpty
+    private PaymentMode paymentMode;
 
     @NotEmpty
     private BigDecimal totalValue;
