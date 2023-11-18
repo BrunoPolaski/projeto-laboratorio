@@ -2,14 +2,20 @@ package io.project.Billing.Project.service.impl;
 
 import io.project.Billing.Project.dto.BillDTO;
 import io.project.Billing.Project.dto.BillInsertDTO;
+import io.project.Billing.Project.dto.PaidBillDTO;
+import io.project.Billing.Project.dto.UnpaidBillDTO;
 import io.project.Billing.Project.exception.ResourceNotFoundException;
+import io.project.Billing.Project.model.PaymentMode;
 import io.project.Billing.Project.model.entities.Bill;
 import io.project.Billing.Project.model.repositories.BillRepository;
 import io.project.Billing.Project.service.BillService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,13 +25,40 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public BillDTO create(BillInsertDTO request) {
+        var entity = Bill.of(request);
+
+        if (request.getPaymentMode() == PaymentMode.CREDIT_CARD ||
+        request.getPaymentMode() == PaymentMode.BANK_SLIP) {
+            entity.setPaidOff(false);
+            entity.setDueDate(LocalDateTime.now().plusMonths(1));
+            entity.setTotalPaidAt(null);
+        } else {
+            entity.setNumberOfInstallments(1L);
+            entity.setTotalPaidAt(LocalDateTime.now());
+        }
+
         return BillDTO.of(repository
-                .save(Bill.of(request)));
+                .save(entity));
     }
 
     @Override
-    public Page<Bill> getAllUnpaidBills(Pageable pageRequest) {
-        return repository.findAllByPaidOffIsFalse(pageRequest);
+    public List<UnpaidBillDTO> getAllUnpaidBills(Pageable pageRequest) {
+        return repository.findAllByPaidOffIsFalse(pageRequest).stream()
+                .map(entity -> {
+                    var unpaidValue = (entity.getTotalValue().floatValue() / entity.getNumberOfInstallments())
+                            * (entity.getNumberOfInstallments() - entity.getPaidInstallments());
+                    UnpaidBillDTO dto = UnpaidBillDTO.of(entity);
+                    dto.setDebtValue(BigDecimal.valueOf(unpaidValue));
+                    return dto;
+                })
+                .toList();
+    }
+
+    @Override
+    public List<PaidBillDTO> getAllPaidBills(Pageable pageRequest) {
+        return repository.findAllByPaidOffIsTrue(pageRequest).stream()
+                .map(PaidBillDTO::of)
+                .toList();
     }
 
     @Override
@@ -33,7 +66,15 @@ public class BillServiceImpl implements BillService {
         var bill = repository.findById(billId)
                 .orElseThrow(() -> new ResourceNotFoundException("Bill not found with id: " + billId));
 
-        bill.setPaidOff(true);
+        bill.setPaidInstallments(bill.getPaidInstallments() + 1L);
+        bill.setDueDate(bill.getDueDate().plusMonths(1));
+
+        if (bill.getPaidInstallments().equals(bill.getNumberOfInstallments())) {
+            bill.setPaidOff(true);
+            bill.setTotalPaidAt(LocalDateTime.now());
+            bill.setDueDate(null);
+        }
+
         repository.save(bill);
     }
 }

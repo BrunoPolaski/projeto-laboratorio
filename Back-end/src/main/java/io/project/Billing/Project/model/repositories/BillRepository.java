@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface BillRepository extends JpaRepository<Bill, Long> {
 
     Page<Bill> findAllByPaidOffIsFalse(Pageable pageRequest);
+
+    Page<Bill> findAllByPaidOffIsTrue(Pageable pageRequest);
 }

@@ -1,7 +1,8 @@
 package io.project.Billing.Project.resource;
 
 import io.project.Billing.Project.dto.BillInsertDTO;
-import io.project.Billing.Project.dto.BillReturnDTO;
+import io.project.Billing.Project.dto.PaidBillDTO;
+import io.project.Billing.Project.dto.UnpaidBillDTO;
 import io.project.Billing.Project.service.BillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
@@ -29,12 +30,18 @@ public class BillController {
         return ResponseEntity.created(uri).body(response);
     }
 
-    @GetMapping
+    @GetMapping("/unpaid")
     public ResponseEntity getAllUnpaidBills(Pageable pageRequest) {
-        var response =  service.getAllUnpaidBills(pageRequest).stream()
-                .map(BillReturnDTO::of)
-                .toList();
-        PageImpl<BillReturnDTO> pagedResponse = new PageImpl<>(response, pageRequest, response.size());
+        var response =  service.getAllUnpaidBills(pageRequest);
+        PageImpl<UnpaidBillDTO> pagedResponse = new PageImpl<>(response, pageRequest, response.size());
+
+        return ResponseEntity.status(HttpStatus.OK).body(pagedResponse);
+    }
+
+    @GetMapping("/paid")
+    public ResponseEntity getAllPaidBills(Pageable pageRequest) {
+        var response =  service.getAllPaidBills(pageRequest);
+        PageImpl<PaidBillDTO> pagedResponse = new PageImpl<>(response, pageRequest, response.size());
 
         return ResponseEntity.status(HttpStatus.OK).body(pagedResponse);
     }

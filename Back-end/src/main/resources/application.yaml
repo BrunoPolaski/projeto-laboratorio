@@ -17,6 +17,10 @@ spring:
     password: root
     driver-class-name: org.postgresql.Driver
 
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+
   mail:
     host: smtp-mail.outlook.com
     port: 587

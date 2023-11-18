@@ -1,6 +1,7 @@
 package io.project.Billing.Project.model.entities;
 
 import io.project.Billing.Project.dto.BillInsertDTO;
+import io.project.Billing.Project.model.PaymentMode;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,21 +21,28 @@ public class Bill {
 
     private String debtor;
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentMode paymentMode;
     private BigDecimal totalValue;
     private Long numberOfInstallments;
+    private Long paidInstallments;
     private boolean paidOff;
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
+    private LocalDateTime totalPaidAt;
 
     public static Bill of(BillInsertDTO request) {
         return Bill.builder()
                 .debtor(request.getDebtor())
                 .email(request.getEmail())
+                .paymentMode(request.getPaymentMode())
                 .totalValue(request.getTotalValue())
                 .numberOfInstallments(request.getNumberOfInstallments())
-                .paidOff(false)
+                .paidInstallments(0L)
+                .paidOff(true)
                 .createdAt(LocalDateTime.now())
-                .dueDate(LocalDateTime.now().plusMonths(1L))
+                .dueDate(null)
                 .build();
     }
 }

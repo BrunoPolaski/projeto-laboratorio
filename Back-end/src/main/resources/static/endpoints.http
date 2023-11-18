@@ -1,0 +1,110 @@
+### CREATE BILL
+POST http://localhost:8080/api/v1
+Content-Type: application/json
+
+{
+  "debtor": "name",
+  "email": "email@email.com",
+  "paymentMode": "PAYMENT_MODE",
+  "totalValue": 140.00,
+  "numberOfInstallments": 3
+}
+
+### GET ALL UNPAID BILLS
+GET http://localhost:8080/api/v1/unpaid
+Content-Type: application/json
+
+{
+  "content": [
+    {
+      "billId": 1,
+      "debtor": "name",
+      "paymentMode": "PAYMENT_MODE",
+      "debtValue": 140.0,
+      "nextDueDate": "2023-12-18T11:28:22.71049"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 1,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "first": true,
+  "numberOfElements": 1,
+  "empty": false
+}
+
+### GET ALL ALREADY PAID BILLS
+GET http://localhost:8080/api/v1/paid
+Content-Type: application/json
+
+{
+  "content": [
+    {
+      "billId": 1,
+      "debtor": "name",
+      "paymentMode": "PAYMENT_MODE",
+      "totalValue": 140.00,
+      "totalPaidAt": "2023-11-18T11:27:58.558807"
+    },
+    {
+      "billId": 2,
+      "debtor": "name",
+      "paymentMode": "PAYMENT_MODE",
+      "totalValue": 140.00,
+      "totalPaidAt": "2023-11-18T11:28:05.409366"
+    },
+    {
+      "billId": 3,
+      "debtor": "James",
+      "paymentMode": "PAYMENT_MODE",
+      "totalValue": 140.00,
+      "totalPaidAt": "2023-11-18T11:29:15.294518"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 20,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 3,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "first": true,
+  "numberOfElements": 3,
+  "empty": false
+}
+
+### UPDATE BILL
+PUT http://localhost:8080/api/v1/{id}
