@@ -22,7 +22,6 @@ class MyHomePage extends StatelessWidget {
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.black12,
             statusBarIconBrightness: Brightness.dark,
-          
           ),
           backgroundColor: Colors.white,
           elevation: 0,
@@ -34,10 +33,14 @@ class MyHomePage extends StatelessWidget {
           ),
           actions: [
             IconButton(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
               onPressed: (){},
               icon: const Icon(Icons.notifications_none_outlined, color: AppColors.purple,),
             ),
             IconButton(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
               onPressed: (){},
               icon: const Icon(Icons.search, color: AppColors.purple,),
             ),
@@ -69,12 +72,11 @@ class MyHomePage extends StatelessWidget {
         ),
       Expanded(
         child: CarouselSlider(
-          
           items: provider.receivedPayments.map((element) => Row(
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   height: 100,
                   decoration: BoxDecoration(
                     color: AppColors.lightPurple.withOpacity(0.5),
@@ -83,22 +85,19 @@ class MyHomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.wallet, color: AppColors.purple, size: 60),
+                      const Icon(Icons.wallet, color: AppColors.purple, size: 60),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Container(
-                            child: Text(element.amount, style: AppTypography.textTitlePurpleSemiBold,)),
+                          Text(element.amount, style: AppTypography.textTitlePurpleSemiBold,),
                       Text(element.nameOfSender.toString(), style: AppTypography.textBodyPurple,),
                         ],
-                      
                       ),
                     ],
                   ),
                 ),
               ),
-              
             ],
           )).toList(),
           options: CarouselOptions(
@@ -110,10 +109,9 @@ class MyHomePage extends StatelessWidget {
             initialPage: 2,
             scrollDirection: Axis.vertical,
             enableInfiniteScroll: false,
-            scrollPhysics: BouncingScrollPhysics(
+            scrollPhysics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
-              
-            )
+            ),
           ),
         ),
       ),
