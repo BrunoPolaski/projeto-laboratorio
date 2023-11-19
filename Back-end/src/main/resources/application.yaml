@@ -12,7 +12,7 @@ spring:
     generate-ddl: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/billingProject
+    url: jdbc:postgresql://postgresql:5432/billing_project
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
