@@ -31,19 +31,15 @@ public class BillController {
     }
 
     @GetMapping("/unpaid")
-    public ResponseEntity getAllUnpaidBills(Pageable pageRequest) {
-        var response =  service.getAllUnpaidBills(pageRequest);
-        PageImpl<UnpaidBillDTO> pagedResponse = new PageImpl<>(response, pageRequest, response.size());
-
-        return ResponseEntity.status(HttpStatus.OK).body(pagedResponse);
+    public ResponseEntity getAllUnpaidBills() {
+        var response =  service.getAllUnpaidBills();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/paid")
-    public ResponseEntity getAllPaidBills(Pageable pageRequest) {
-        var response =  service.getAllPaidBills(pageRequest);
-        PageImpl<PaidBillDTO> pagedResponse = new PageImpl<>(response, pageRequest, response.size());
-
-        return ResponseEntity.status(HttpStatus.OK).body(pagedResponse);
+    public ResponseEntity getAllPaidBills() {
+        var response =  service.getAllPaidBills();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{id}")
