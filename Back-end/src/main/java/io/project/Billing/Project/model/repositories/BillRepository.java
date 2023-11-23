@@ -1,15 +1,15 @@
 package io.project.Billing.Project.model.repositories;
 
 import io.project.Billing.Project.model.entities.Bill;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Long> {
 
-    Page<Bill> findAllByPaidOffIsFalse(Pageable pageRequest);
+    List<Bill> findAllByPaidOffIsFalse();
 
-    Page<Bill> findAllByPaidOffIsTrue(Pageable pageRequest);
+    List<Bill> findAllByPaidOffIsTrue();
 }
