@@ -1,5 +1,5 @@
 
-import 'package:app_facul/app/domain/entities/models/received_payment_models.dart';
+import 'package:app_facul/app/entities/models/received_payment_models.dart';
 import 'package:dio/dio.dart';
 
 class HomePageRepository {

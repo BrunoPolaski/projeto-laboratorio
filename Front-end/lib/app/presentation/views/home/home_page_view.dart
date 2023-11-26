@@ -1,4 +1,4 @@
-import 'package:app_facul/app/presentation/components/common/custom_rectangle_button_widget.dart';
+import 'package:app_facul/app/presentation/widgets/common/custom_rectangle_button_widget.dart';
 import 'package:app_facul/app/presentation/layout/custom_layout.dart';
 import 'package:app_facul/app/presentation/providers/home_page_provider.dart';
 import 'package:app_facul/app/presentation/themes/colors.dart';

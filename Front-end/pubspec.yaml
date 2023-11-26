@@ -39,28 +39,12 @@ dependencies:
   dio: ^5.3.3
   provider: ^6.1.1
   flutter_launcher_icons: ^0.13.1
-<<<<<<< HEAD:Mobile/pubspec.yaml
-=======
   flutter_native_splash: ^2.3.5
->>>>>>> main:Front-end/pubspec.yaml
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  flutter_native_splash: ^2.3.5
-
-flutter_native_splash:
-  color: "#D7CADA"
-  image: assets/images/logo_payed.jpg
-  android: true
-  ios: true
-
-flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/images/logo_payed.jpg"
-
 
 flutter_native_splash:
   color: "#0xFFD7CADA"
