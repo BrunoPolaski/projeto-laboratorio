@@ -42,8 +42,8 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<UnpaidBillDTO> getAllUnpaidBills(Pageable pageRequest) {
-        return repository.findAllByPaidOffIsFalse(pageRequest).stream()
+    public List<UnpaidBillDTO> getAllUnpaidBills() {
+        return repository.findAllByPaidOffIsFalse().stream()
                 .map(entity -> {
                     var unpaidValue = (entity.getTotalValue().floatValue() / entity.getNumberOfInstallments())
                             * (entity.getNumberOfInstallments() - entity.getPaidInstallments());
@@ -55,8 +55,8 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<PaidBillDTO> getAllPaidBills(Pageable pageRequest) {
-        return repository.findAllByPaidOffIsTrue(pageRequest).stream()
+    public List<PaidBillDTO> getAllPaidBills() {
+        return repository.findAllByPaidOffIsTrue().stream()
                 .map(PaidBillDTO::of)
                 .toList();
     }
