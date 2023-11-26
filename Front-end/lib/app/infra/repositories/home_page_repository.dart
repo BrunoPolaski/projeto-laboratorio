@@ -1,5 +1,6 @@
 
-import 'package:app_facul/app/entities/models/received_payment_models.dart';
+import 'package:app_facul/app/entities/models/received_payment_model.dart';
+import 'package:app_facul/app/entities/models/unreceived_payment_model.dart';
 import 'package:dio/dio.dart';
 
 class HomePageRepository {
@@ -52,6 +53,30 @@ class HomePageRepository {
     };
 
     List<ReceivedPaymentsModel> list = jsonMock.map((item) => ReceivedPaymentsModel.fromJson(item)).toList();
+    
+    return list;
+    }catch(e){
+      throw Exception('Erro ao carregar dados');
+    }
+  }
+
+  Future<List<UnreceivedPaymentsModel>> getUnreceivedPayments() async {
+    try {
+    // final response = await dio.get('api');
+
+    // if(response.statusCode != 200) {
+    //   throw Exception;
+    // }
+
+    final jsonMock = {
+      {
+        "nameOfSender": "João",
+        "amount": "R\$ 100,00",
+        "date": "10/10/2021"
+      },
+    };
+
+    List<UnreceivedPaymentsModel> list = jsonMock.map((item) => UnreceivedPaymentsModel.fromJson(item)).toList();
     
     return list;
     }catch(e){

@@ -1,5 +1,5 @@
 import 'package:app_facul/app/infra/repositories/home_page_repository.dart';
-import 'package:app_facul/app/entities/models/received_payment_models.dart';
+import 'package:app_facul/app/entities/models/received_payment_model.dart';
 
 class GetReceivedPaymentsUseCase {
   HomePageRepository homePageRepository = HomePageRepository();

@@ -1,3 +1,4 @@
+import 'package:app_facul/app/presentation/layout/custom_size.dart';
 import 'package:app_facul/app/presentation/widgets/common/custom_rectangle_button_widget.dart';
 import 'package:app_facul/app/presentation/layout/custom_layout.dart';
 import 'package:app_facul/app/presentation/providers/home_page_provider.dart';
@@ -9,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -19,10 +20,6 @@ class MyHomePage extends StatelessWidget {
     return CustomLayout(
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.black12,
-            statusBarIconBrightness: Brightness.dark,
-          ),
           backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
@@ -31,18 +28,30 @@ class MyHomePage extends StatelessWidget {
             onPressed: (){},
             icon: const Icon(Icons.menu, color: AppColors.purple,),
           ),
+          title: provider.icon == Icons.close ? TextField(
+            style: AppTypography.textBodyPurple,
+            decoration: InputDecoration(
+              hintText: 'Pesquisar',
+              hintStyle: AppTypography.textBodyPurple,
+              border: InputBorder.none,
+            ),
+            onChanged: (value) {
+            },
+          )
+          : Container(),
           actions: [
             IconButton(
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              onPressed: (){},
-              icon: const Icon(Icons.notifications_none_outlined, color: AppColors.purple,),
-            ),
-            IconButton(
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              onPressed: (){},
-              icon: const Icon(Icons.search, color: AppColors.purple,),
+              onPressed: (){
+                if(provider.icon == Icons.search){
+                  provider.setReceivedButtonIcon(Icons.close);
+                } else {
+                  provider.setReceivedButtonIcon(Icons.search);
+                  provider.resetFilterLists();
+                }
+              },
+              icon: Icon(provider.icon, color: AppColors.purple,),
             ),
           ],
         ),
@@ -53,31 +62,36 @@ class MyHomePage extends StatelessWidget {
              mainAxisAlignment: MainAxisAlignment.spaceAround,
                  children: [
            CustomRectangleButtonWidget(
-            height: 110,
+            height: CustomHeight.custom(110),
             width: MediaQuery.of(context).size.width / 2.5,
-             onPressed: (){},
+             onPressed: (){
+                provider.setReceivedButtonOn(true);
+             },
              text: 'Pagamentos recebidos',
              color: AppColors.white,
              textStyle: AppTypography.textBodyPurple,
            ),
            CustomRectangleButtonWidget(
-              height: 110,
+              height: CustomHeight.custom(110),
             width: MediaQuery.of(context).size.width / 2.5,
-             onPressed: (){},
+             onPressed: (){
+                provider.setReceivedButtonOn(false);
+             },
              text: 'Pagamentos a receber',
              color: AppColors.purple,
              textStyle: AppTypography.textBodyWhite,
             ),
           ],
         ),
-      Expanded(
+      provider.receivedButtonOn
+      ? Expanded(
         child: CarouselSlider(
-          items: provider.receivedPayments.map((element) => Row(
+          items: provider.receivedPaymentsFiltered.map((element) => Row(
             children: [
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  height: 100,
+                  height: CustomHeight.custom(100),
                   decoration: BoxDecoration(
                     color: AppColors.lightPurple.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10),
@@ -114,7 +128,52 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
         ),
-      ),
+      )
+      : Expanded(
+        child: CarouselSlider(
+          items: provider.unreceivedPaymentsFiltered.map((element) => Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  height: CustomHeight.custom(100),
+                  decoration: BoxDecoration(
+                    color: AppColors.lightPurple.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Icon(Icons.wallet, color: AppColors.purple, size: 60),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(element.amount, style: AppTypography.textTitlePurpleSemiBold,),
+                      Text(element.nameOfSender.toString(), style: AppTypography.textBodyPurple,),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )).toList(),
+          options: CarouselOptions(
+            height: 100,
+            viewportFraction: 0.2,
+            enlargeCenterPage: false,
+            autoPlay: false,
+            aspectRatio: 2.0,
+            initialPage: 2,
+            scrollDirection: Axis.vertical,
+            enableInfiniteScroll: false,
+            scrollPhysics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
+          ),
+        ),
+      )
         ],
       ),
       )
