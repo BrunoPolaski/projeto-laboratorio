@@ -1,18 +1,16 @@
 import 'package:app_facul/app/entities/models/unreceived_payment_model.dart';
-import 'package:app_facul/app/infra/repositories/home_page_repository.dart';
 import 'package:app_facul/app/entities/models/received_payment_model.dart';
 import 'package:app_facul/app/usecases/get_received_payments_usecase.dart';
 import 'package:app_facul/app/usecases/get_unreceived_payments_usecase.dart';
 import 'package:flutter/material.dart';
 
 class HomePageProvider extends ChangeNotifier{
-  HomePageRepository homePageRepository = HomePageRepository();
-  GetReceivedPaymentsUseCase getReceivedPaymentsUseCase = GetReceivedPaymentsUseCase(HomePageRepository());
-  GetUnreceivedPaymentsUseCase getUnreceivedPaymentsUseCase = GetUnreceivedPaymentsUseCase(HomePageRepository());
+  GetReceivedPaymentsUseCase getReceivedPaymentsUseCase;
+  GetUnreceivedPaymentsUseCase getUnreceivedPaymentsUseCase;
 
-  HomePageProvider(HomePageRepository homePageRepository, GetReceivedPaymentsUseCase getReceivedPaymentsUseCase)
-  {
-    resetFilterLists();
+  HomePageProvider(this.getReceivedPaymentsUseCase, this.getUnreceivedPaymentsUseCase){
+    getReceivedPayments();
+    getUnreceivedPayments();
   }
 
   List<ReceivedPaymentsModel> receivedPayments = [];
@@ -25,12 +23,14 @@ class HomePageProvider extends ChangeNotifier{
   Future<void> getReceivedPayments() async {
     final response = await getReceivedPaymentsUseCase.execute();
     receivedPayments = response;
+    receivedPaymentsFiltered = receivedPayments;
     notifyListeners();
   }
 
   Future<void> getUnreceivedPayments() async {
     final response = await getUnreceivedPaymentsUseCase.execute();
     unreceivedPayments = response;
+    unreceivedPaymentsFiltered = unreceivedPayments;
     notifyListeners();
   }
 

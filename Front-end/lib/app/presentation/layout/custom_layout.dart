@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class CustomLayout extends StatelessWidget {
   final Widget child;
   final Widget? footer;
-  final Widget? appBar;
+  final AppBar? appBar;
   final Color? backgroundColor;
   final Color? bodyColor;
   final bool? isScrollable;
   final double? horizontalPadding;
+  final Drawer? drawer;
+  final Widget? floatingActionButton;
 
   const CustomLayout({
     Key? key,
@@ -19,6 +21,8 @@ class CustomLayout extends StatelessWidget {
     this.isScrollable = false,
     this.horizontalPadding,
     this.bodyColor,
+    this.drawer,
+    this.floatingActionButton,
   }) : super(key: key);
 
   @override
@@ -29,16 +33,17 @@ class CustomLayout extends StatelessWidget {
       child: LayoutBuilder(
         builder: ((context, constraints) {
           return Scaffold(
+            appBar: appBar,
+            drawer: drawer,
             backgroundColor: backgroundColor,
+            floatingActionButton: floatingActionButton,
             resizeToAvoidBottomInset: true,
             body: CustomScrollView(
               physics: isScrollable! ? null : const NeverScrollableScrollPhysics(),
               slivers: [
-                if(appBar != null) appBar!,
                 SliverFillRemaining(
                   hasScrollBody: false,
                   child: Container(
-                    margin: EdgeInsets.only(top: CustomHeight.custom(24)),
                     padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                     color: bodyColor,
                     child: Column(
