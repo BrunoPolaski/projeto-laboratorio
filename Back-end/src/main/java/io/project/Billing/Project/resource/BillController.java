@@ -1,12 +1,8 @@
 package io.project.Billing.Project.resource;
 
 import io.project.Billing.Project.dto.BillInsertDTO;
-import io.project.Billing.Project.dto.PaidBillDTO;
-import io.project.Billing.Project.dto.UnpaidBillDTO;
 import io.project.Billing.Project.service.BillService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

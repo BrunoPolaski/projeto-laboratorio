@@ -16,4 +16,6 @@ public interface BillService {
     List<PaidBillDTO> getAllPaidBills();
 
     void updateBillStatus(Long id);
+
+    List<String> getAllNextDueDate();
 }
