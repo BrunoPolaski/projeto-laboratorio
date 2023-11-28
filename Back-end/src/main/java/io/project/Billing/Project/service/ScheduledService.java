@@ -19,6 +19,7 @@ public class ScheduledService {
 
     @Scheduled(cron = CRON_LATE_LOANS)
     public void sendMailToLateBills() {
-
+        emailService.sendMail(message,
+                billService.getAllNextDueDate());
     }
 }

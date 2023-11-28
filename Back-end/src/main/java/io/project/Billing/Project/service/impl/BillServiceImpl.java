@@ -10,10 +10,10 @@ import io.project.Billing.Project.model.entities.Bill;
 import io.project.Billing.Project.model.repositories.BillRepository;
 import io.project.Billing.Project.service.BillService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -76,5 +76,12 @@ public class BillServiceImpl implements BillService {
         }
 
         repository.save(bill);
+    }
+
+    @Override
+    public List<String> getAllNextDueDate() {
+        return repository.findAllByDueDateLessThanAndPaidOffIsFalse(LocalDate.now().plusDays(3)).stream()
+                .map(Bill::getEmail)
+                .toList();
     }
 }
