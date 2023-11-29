@@ -1,61 +1,63 @@
 
-import 'package:app_facul/app/domain/entities/models/received_payment_models.dart';
+import 'dart:convert';
+
+import 'package:app_facul/app/entities/models/api_exception.dart';
+import 'package:app_facul/app/entities/models/received_payment_model.dart';
+import 'package:app_facul/app/entities/models/unreceived_payment_model.dart';
+import 'package:app_facul/app/infra/repositories/api_endpoints.dart';
+import 'package:app_facul/app/utils/warnings.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 class HomePageRepository {
   Dio dio = Dio();
+  
 
   Future<List<ReceivedPaymentsModel>> getReceivedPayments() async {
     try {
-    // final response = await dio.get('api');
+    final response = await http.get(Uri.https('localhost:8080', '/api/v1/paid'));
 
-    // if(response.statusCode != 200) {
-    //   throw Exception;
-    // }
+    if(response.statusCode != 200) throw Exception;
 
-    final jsonMock = {
-      {
-        "nameOfSender": "João",
-        "amount": "R\$ 100,00",
-        "date": "10/10/2021"
-      },
-      {
-        "nameOfSender": "Maria",
-        "amount": "R\$ 200,00",
-        "date": "10/10/2021"
-      },
-      {
-        "nameOfSender": "José",
-        "amount": "R\$ 300,00",
-        "date": "10/10/2021"
-      },
-      {
-        "nameOfSender": "Pedro",
-        "amount": "R\$ 400,00",
-        "date": "10/10/2021"
-      },
-      {
-        "nameOfSender": "Paulo",
-        "amount": "R\$ 500,00",
-        "date": "10/10/2021"
-      },
-      {
-        "nameOfSender": "Joana",
-        "amount": "R\$ 600,00",
-        "date": "10/10/2021"
-      },
-      {
-        "nameOfSender": "Ana",
-        "amount": "R\$ 700,00",
-        "date": "10/10/2021"
-    },
-    };
+    final data = jsonDecode(response.body);
 
-    List<ReceivedPaymentsModel> list = jsonMock.map((item) => ReceivedPaymentsModel.fromJson(item)).toList();
+    List<ReceivedPaymentsModel> list = data.map((item) => ReceivedPaymentsModel.fromJson(item)).toList();
     
     return list;
     }catch(e){
-      throw Exception('Erro ao carregar dados');
+      throw ApiException(message: Warnings.couldntFindData);
+    }
+  }
+
+  Future<List<UnreceivedPaymentsModel>> getUnreceivedPayments() async {
+    try {
+    final response = await dio.get(ApiEndpoints.getUnpaidBills);
+
+    if(response.statusCode != 200) {
+      throw Exception;
+    }
+
+    List<UnreceivedPaymentsModel> list = response.data.map((item) => UnreceivedPaymentsModel.fromJson(item)).toList();
+    
+    return list;
+    }catch(e){
+      throw ApiException(message: Warnings.couldntFindData);
+    }
+  }
+
+  Future<void> updateReceivedPayment(ReceivedPaymentsModel payment) async {
+    try {
+      final response = await dio.put(ApiEndpoints.updateBill, data: payment.billId);
+
+    if(response.statusCode != 200) {
+      throw Exception;
+    }
+;
+    if(kDebugMode) print(response.data);
+    if(kDebugMode) print(response.statusCode);
+    }catch(e){
+      throw ApiException(message: Warnings.couldntUpdateData);
     }
   }
 }
