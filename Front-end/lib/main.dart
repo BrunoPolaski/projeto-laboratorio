@@ -22,6 +22,7 @@ void main() {
   }, (error, stack) {
     if (kDebugMode) {
       debugPrint('Caught error in my root zone: $error');
+      debugPrint('Caught error in my root zone: $stack');
     }
   },);
 }
