@@ -27,8 +27,8 @@ public class BillServiceImpl implements BillService {
     public BillDTO create(BillInsertDTO request) {
         var entity = Bill.of(request);
 
-        if (request.getPaymentMode() == PaymentMode.CREDIT_CARD ||
-        request.getPaymentMode() == PaymentMode.BANK_SLIP) {
+        if ((request.getPaymentMode() == PaymentMode.CREDIT_CARD ||
+        request.getPaymentMode() == PaymentMode.BANK_SLIP) && entity.getNumberOfInstallments() != 1) {
             entity.setPaidOff(false);
             entity.setDueDate(LocalDateTime.now().plusMonths(1));
             entity.setTotalPaidAt(null);
