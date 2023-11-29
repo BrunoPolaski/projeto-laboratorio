@@ -46,13 +46,13 @@ class HomePageProvider extends ChangeNotifier{
 
   void filterReceivedPayments(String value) {
     receivedPaymentsFiltered = receivedPayments;
-    receivedPaymentsFiltered = receivedPaymentsFiltered.where((element) => element.nameOfSender.toLowerCase().contains(value.toLowerCase())).toList();
+    receivedPaymentsFiltered = receivedPaymentsFiltered.where((element) => element.debtor.toLowerCase().contains(value.toLowerCase())).toList();
     notifyListeners();
   }
 
   void filterUnreceivedPayments(String value) {
     unreceivedPaymentsFiltered = unreceivedPayments;
-    unreceivedPaymentsFiltered = unreceivedPaymentsFiltered.where((element) => element.nameOfSender.toLowerCase().contains(value.toLowerCase())).toList();
+    unreceivedPaymentsFiltered = unreceivedPaymentsFiltered.where((element) => element.debtor.toLowerCase().contains(value.toLowerCase())).toList();
     notifyListeners();
   }
 

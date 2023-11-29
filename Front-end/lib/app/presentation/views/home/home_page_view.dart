@@ -131,8 +131,8 @@ class MyHomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(element.amount, style: AppTypography.textTitlePurpleSemiBold,),
-                        Text(element.nameOfSender.toString(), style: AppTypography.textBodyPurple,),
+                            Text(element.totalValue, style: AppTypography.textTitlePurpleSemiBold,),
+                        Text(element.debtor.toString(), style: AppTypography.textBodyPurple,),
                           ],
                         ),
                       ],
@@ -180,8 +180,8 @@ class MyHomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(element.amount, style: AppTypography.textTitlePurpleSemiBold,),
-                            Text(element.nameOfSender.toString(), style: AppTypography.textBodyPurple,),
+                            Text(element.debtValue, style: AppTypography.textTitlePurpleSemiBold,),
+                            Text(element.debtor.toString(), style: AppTypography.textBodyPurple,),
                           ],
                         ),
                       ],

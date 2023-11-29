@@ -23,7 +23,7 @@ void main() {
     if (kDebugMode) {
       debugPrint('Caught error in my root zone: $error');
     }
-  });
+  },);
 }
 
 class MyApp extends StatelessWidget {

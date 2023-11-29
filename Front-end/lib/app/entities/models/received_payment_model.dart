@@ -1,19 +1,25 @@
 class ReceivedPaymentsModel{
-  String nameOfSender;
-  String amount;
-  String date;
+  int billId;
+  String debtor;
+  String paymentMode;
+  String totalValue;
+  String totalPaidAt;
 
   ReceivedPaymentsModel({
-    required this.nameOfSender,
-    required this.amount,
-    required this.date,
+    required this.billId,
+    required this.debtor,
+    required this.paymentMode,
+    required this.totalValue,
+    required this.totalPaidAt,
   });
 
   factory ReceivedPaymentsModel.fromJson(Map<String, dynamic> json) {
     return ReceivedPaymentsModel(
-      nameOfSender: json['nameOfSender'],
-      amount: json['amount'],
-      date: json['date'],
+      billId: json['billId'],
+      debtor: json['debtor'],
+      paymentMode: json['paymentMode'],
+      totalValue: json['totalValue'],
+      totalPaidAt: json['totalPaidAt'],
     );
   }
 }
