@@ -1,4 +1,5 @@
 import 'package:app_facul/app/presentation/layout/custom_size.dart';
+import 'package:app_facul/app/presentation/views/home/create_debt_view.dart';
 import 'package:app_facul/app/presentation/views/insights/insights_view.dart';
 import 'package:app_facul/app/presentation/widgets/common/custom_rectangle_button_widget.dart';
 import 'package:app_facul/app/presentation/layout/custom_layout.dart';
@@ -50,7 +51,10 @@ class MyHomePage extends StatelessWidget {
           ],
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: (){},
+          onPressed: (){
+            provider.isDebtTypeSelected = true;
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateDebtView()));
+          },
           backgroundColor: AppColors.purple,
           child: const Icon(Icons.add),
         ),
@@ -87,21 +91,23 @@ class MyHomePage extends StatelessWidget {
             height: CustomHeight.custom(110),
             width: MediaQuery.of(context).size.width / 2.5,
              onPressed: (){
+                provider.getReceivedPayments();
                 provider.setReceivedButtonOn(true);
              },
              text: 'Pagamentos recebidos',
-             color: AppColors.white,
-             textStyle: AppTypography.textBodyPurple,
+             color: provider.receivedButtonOn ? AppColors.purple : AppColors.white,
+             textStyle: provider.receivedButtonOn ? AppTypography.textBodyWhite :  AppTypography.textBodyPurple
            ),
            CustomRectangleButtonWidget(
               height: CustomHeight.custom(110),
             width: MediaQuery.of(context).size.width / 2.5,
              onPressed: (){
+                provider.getUnreceivedPayments();
                 provider.setReceivedButtonOn(false);
              },
              text: 'Pagamentos a receber',
-             color: AppColors.purple,
-             textStyle: AppTypography.textBodyWhite,
+             color: provider.receivedButtonOn ? AppColors.white : AppColors.purple,
+             textStyle: provider.receivedButtonOn ? AppTypography.textBodyPurple : AppTypography.textBodyWhite
             ),
           ],
         ),
@@ -131,7 +137,7 @@ class MyHomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(element.totalValue, style: AppTypography.textTitlePurpleSemiBold,),
+                            Text(element.totalValue.toString(), style: AppTypography.textTitlePurpleSemiBold,),
                         Text(element.debtor.toString(), style: AppTypography.textBodyPurple,),
                           ],
                         ),
@@ -162,33 +168,38 @@ class MyHomePage extends StatelessWidget {
         child: CarouselSlider(
           items: provider.unreceivedPaymentsFiltered.map((element) => Padding(
             padding: EdgeInsets.symmetric(horizontal: CustomWidth.custom(20)),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    height: CustomHeight.custom(100),
-                    decoration: BoxDecoration(
-                      color: AppColors.lightPurple.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Icon(Icons.wallet, color: AppColors.purple, size: 60),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(element.debtValue, style: AppTypography.textTitlePurpleSemiBold,),
-                            Text(element.debtor.toString(), style: AppTypography.textBodyPurple,),
-                          ],
-                        ),
-                      ],
+            child: GestureDetector(
+              onTap: (){
+                
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      height: CustomHeight.custom(100),
+                      decoration: BoxDecoration(
+                        color: AppColors.lightPurple.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Icon(Icons.wallet, color: AppColors.purple, size: 60),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(element.debtValue.toString(), style: AppTypography.textTitlePurpleSemiBold,),
+                              Text(element.debtor.toString(), style: AppTypography.textBodyPurple,),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           )).toList(),
           options: CarouselOptions(

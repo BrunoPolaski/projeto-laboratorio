@@ -2,7 +2,7 @@ class ReceivedPaymentsModel{
   int billId;
   String debtor;
   String paymentMode;
-  String totalValue;
+  double totalValue;
   String totalPaidAt;
 
   ReceivedPaymentsModel({

@@ -1,31 +1,28 @@
-
-import 'dart:convert';
-
 import 'package:app_facul/app/entities/models/api_exception.dart';
+import 'package:app_facul/app/entities/models/create_debt_model.dart';
 import 'package:app_facul/app/entities/models/received_payment_model.dart';
 import 'package:app_facul/app/entities/models/unreceived_payment_model.dart';
+import 'package:app_facul/app/infra/dio.dart';
 import 'package:app_facul/app/infra/repositories/api_endpoints.dart';
 import 'package:app_facul/app/utils/warnings.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
 class HomePageRepository {
-  Dio dio = Dio();
+  Dio dio = Api.getInstance();
   
 
   Future<List<ReceivedPaymentsModel>> getReceivedPayments() async {
     try {
-    final response = await http.get(Uri.https('localhost:8080', '/api/v1/paid'));
+    final response = await dio.get(ApiEndpoints.getPaidBills);
 
     if(response.statusCode != 200) throw Exception;
 
-    final data = jsonDecode(response.body);
-
-    List<ReceivedPaymentsModel> list = data.map((item) => ReceivedPaymentsModel.fromJson(item)).toList();
+    List<ReceivedPaymentsModel> list = response.data.map<ReceivedPaymentsModel>((item) => ReceivedPaymentsModel.fromJson(item)).toList();
     
     return list;
     }catch(e){
+      if(kDebugMode) print(e);
       throw ApiException(message: Warnings.couldntFindData);
     }
   }
@@ -38,15 +35,16 @@ class HomePageRepository {
       throw Exception;
     }
 
-    List<UnreceivedPaymentsModel> list = response.data.map((item) => UnreceivedPaymentsModel.fromJson(item)).toList();
+    List<UnreceivedPaymentsModel> list = response.data.map<UnreceivedPaymentsModel>((item) => UnreceivedPaymentsModel.fromJson(item)).toList();
     
     return list;
     }catch(e){
+      if(kDebugMode) print(e);
       throw ApiException(message: Warnings.couldntFindData);
     }
   }
 
-  Future<void> updateReceivedPayment(ReceivedPaymentsModel payment) async {
+  Future<void> updateReceivedPayment(UnreceivedPaymentsModel payment) async {
     try {
       final response = await dio.put(ApiEndpoints.updateBill, data: payment.billId);
 
@@ -57,7 +55,22 @@ class HomePageRepository {
     if(kDebugMode) print(response.data);
     if(kDebugMode) print(response.statusCode);
     }catch(e){
+      if(kDebugMode) print(e);
       throw ApiException(message: Warnings.couldntUpdateData);
+    }
+  }
+
+  Future<void> createDebt(CreateDebtModel debt) async {
+    try {
+      final response = await dio.post(ApiEndpoints.createDebt, data: debt.toJson());
+
+    if(response.statusCode != 201) {
+      throw Exception;
+    }
+}
+    catch(e){
+      if(kDebugMode) print(e);
+      throw ApiException(message: Warnings.couldntFindData);
     }
   }
 }

@@ -49,4 +49,11 @@ class AppTypography{
     fontFamily: fontName,
     color: AppColors.white
   );
+
+  static const TextStyle textError = TextStyle(
+    fontSize: textSmall,
+    fontWeight: FontWeight.w600,
+    fontFamily: fontName,
+    color: Colors.red
+  );
 }

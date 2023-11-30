@@ -2,7 +2,7 @@ class UnreceivedPaymentsModel{
   int billId;
   String debtor;
   String paymentMode;
-  String debtValue;
+  double debtValue;
   String nextDueDate;
 
   UnreceivedPaymentsModel({
