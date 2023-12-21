@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppColors{
-  static const white = Color(0xFFF1EAFF);
-  static const lightestPurple = Color(0xFFE5D4FF);
-  static const lightPurple = Color(0xFFDCBFFF);
-  static const purple = Color(0xFFD0A2F7);
+  static const white = Color(0xFFFEFAE0);
+  static const lightestGreen = Color(0xFFFEFAE0);
+  static const lightGreen = Color(0xFFA9B388);
+  static const green = Color(0xFF5F6F52);
 }

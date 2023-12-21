@@ -37,7 +37,7 @@ class CustomLayout extends StatelessWidget {
             drawer: drawer,
             backgroundColor: backgroundColor,
             floatingActionButton: floatingActionButton,
-            resizeToAvoidBottomInset: true,
+            resizeToAvoidBottomInset: false,
             body: CustomScrollView(
               physics: isScrollable! ? null : const NeverScrollableScrollPhysics(),
               slivers: [

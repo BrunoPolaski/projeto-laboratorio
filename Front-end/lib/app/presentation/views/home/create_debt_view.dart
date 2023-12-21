@@ -4,8 +4,9 @@ import 'package:app_facul/app/presentation/providers/home_page_provider.dart';
 import 'package:app_facul/app/presentation/themes/colors.dart';
 import 'package:app_facul/app/presentation/themes/typography.dart';
 import 'package:app_facul/app/presentation/widgets/common/custom_rectangle_button_widget.dart';
-import 'package:app_facul/app/presentation/widgets/custom_textfield.dart';
+import 'package:app_facul/app/presentation/widgets/common/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class CreateDebtView extends StatelessWidget {
@@ -13,24 +14,24 @@ class CreateDebtView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
     final provider = Provider.of<HomePageProvider>(context);
+  final formKey = GlobalKey<FormState>();
 
     return CustomLayout(
       horizontalPadding: 0,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          foregroundColor: AppColors.purple,
+          foregroundColor: AppColors.green,
           elevation: 0,
           backgroundColor: Colors.white,
-          title: const Text('Criar novo pagamento', style: TextStyle(color: AppColors.purple),),
+          title: const Text('Criar novo pagamento', style: TextStyle(color: AppColors.green),),
           leading: IconButton(
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             onPressed: (){
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back, color: AppColors.purple,),
+            icon: const Icon(Icons.arrow_back, color: AppColors.green,),
           ),
         ),
         child: Column(
@@ -67,9 +68,9 @@ class CreateDebtView extends StatelessWidget {
                               }
                               return null;
                             },
-                            controller: null,
-                            prefixIcon: const Icon(Icons.person, color: AppColors.lightPurple),
-                            style: AppTypography.textBodyPurple,
+                            controller: provider.nameController,
+                            prefixIcon: const Icon(Icons.person, color: AppColors.lightGreen),
+                            style: AppTypography.textBodyGreen,
                           ),
                           SizedBox(height: CustomHeight.custom(20)),
                           CustomTextField(
@@ -82,9 +83,9 @@ class CreateDebtView extends StatelessWidget {
                               }
                               return null;
                             },
-                            controller: null,
-                            prefixIcon: const Icon(Icons.email, color: AppColors.lightPurple),
-                            style: AppTypography.textBodyPurple,
+                            controller: provider.emailController,
+                            prefixIcon: const Icon(Icons.email, color: AppColors.lightGreen),
+                            style: AppTypography.textBodyGreen,
                           
                           ),
                           SizedBox(height: CustomHeight.custom(20)),
@@ -95,15 +96,18 @@ class CreateDebtView extends StatelessWidget {
                                   hintText: 'Valor',
                                   labelText: 'Valor',
                                   keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Valor inválido';
                                     }
                                     return null;
                                   },
-                                  controller: null,
-                                  prefixIcon: const Icon(Icons.monetization_on, color: AppColors.lightPurple),
-                                  style: AppTypography.textBodyPurple,
+                                  controller: provider.valueController,
+                                  prefixIcon: const Icon(Icons.monetization_on, color: AppColors.lightGreen),
+                                  style: AppTypography.textBodyGreen,
                                 ),
                               ),
                               Container(
@@ -113,15 +117,18 @@ class CreateDebtView extends StatelessWidget {
                                   hintText: 'Número de parcelas',
                                   labelText: 'Parcelas',
                                   keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Número de parcelas inválido';
                                     }
                                     return null;
                                   },
-                                  controller: null,
-                                  prefixIcon: const Icon(Icons.format_list_numbered, color: AppColors.lightPurple),
-                                  style: AppTypography.textBodyPurple,
+                                  controller: provider.installmentsController,
+                                  prefixIcon: const Icon(Icons.format_list_numbered, color: AppColors.lightGreen),
+                                  style: AppTypography.textBodyGreen,
                                 ),
                               ),
                             ],
@@ -131,10 +138,10 @@ class CreateDebtView extends StatelessWidget {
                                 menuStyle: MenuStyle(
                                   backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
                                 ),
-                                textStyle: AppTypography.textBodyPurple,
-                                leadingIcon: const Icon(Icons.payment, color: AppColors.lightPurple),
+                                textStyle: AppTypography.textBodyGreen,
+                                leadingIcon: const Icon(Icons.payment, color: AppColors.lightGreen),
                                 width: CustomWidth.custom(300),
-                                label: const Text('Forma de pagamento', style: TextStyle(color: AppColors.lightPurple),),
+                                label: const Text('Forma de pagamento', style: TextStyle(color: AppColors.lightGreen),),
                                 dropdownMenuEntries: const [
                                   DropdownMenuEntry(
                                     label: 'Em dinheiro',
@@ -170,16 +177,17 @@ class CreateDebtView extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: CustomRectangleButtonWidget(
                 height: CustomHeight.custom(60),
-                width: MediaQuery.of(context).size.width,
+                width: double.infinity,
                 onPressed: (){
                   if(formKey.currentState!.validate() && provider.isDebtTypeSelected){
-                    provider.createDebtUsecase.execute(provider.createDebtModel);
+                    provider.createDebt();
+                    Navigator.pop(context);
                   } else {
                     provider.selectedDebtType == null ? provider.setEmptyDebtType() : null;
                   }
                 },
                 text: 'Criar pagamento',
-                color: AppColors.purple,
+                color: AppColors.green,
                 textStyle: AppTypography.textBodyWhite,
               ),
             ),

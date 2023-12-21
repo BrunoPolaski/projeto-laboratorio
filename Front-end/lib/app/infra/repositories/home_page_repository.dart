@@ -15,6 +15,7 @@ class HomePageRepository {
   Future<List<ReceivedPaymentsModel>> getReceivedPayments() async {
     try {
     final response = await dio.get(ApiEndpoints.getPaidBills);
+    if (kDebugMode) print(response.data);
 
     if(response.statusCode != 200) throw Exception;
 
@@ -22,6 +23,7 @@ class HomePageRepository {
     
     return list;
     }catch(e){
+      if(kDebugMode) print("--------------------erro aqui em repository-------------------");
       if(kDebugMode) print(e);
       throw ApiException(message: Warnings.couldntFindData);
     }
@@ -46,7 +48,7 @@ class HomePageRepository {
 
   Future<void> updateReceivedPayment(UnreceivedPaymentsModel payment) async {
     try {
-      final response = await dio.put(ApiEndpoints.updateBill, data: payment.billId);
+      final response = await dio.put(ApiEndpoints.updateBill.replaceAll("{id}", payment.billId.toString()));
 
     if(response.statusCode != 200) {
       throw Exception;

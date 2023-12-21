@@ -6,7 +6,6 @@ import 'package:app_facul/app/usecases/create_debt_usecase.dart';
 import 'package:app_facul/app/usecases/get_received_payments_usecase.dart';
 import 'package:app_facul/app/usecases/get_unreceived_payments_usecase.dart';
 import 'package:app_facul/app/usecases/update_debt_usecase.dart';
-import 'package:app_facul/app/utils/device_dimensions_utils.dart';
 import 'package:app_facul/app/presentation/views/home/home_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DeviceDimensions.init(context);
     HomePageRepository homePageRepository = HomePageRepository();
       
     return MultiProvider(

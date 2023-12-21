@@ -8,11 +8,11 @@ const double textLarge = 22;
   const String fontName = 'Montserrat';
 
 class AppTypography{
-  static const TextStyle textBodyPurple = TextStyle(
+  static const TextStyle textBodyGreen = TextStyle(
     fontSize: textNormal,
     fontWeight: FontWeight.w600,
     fontFamily: fontName,
-    color: AppColors.purple
+    color: AppColors.green
   );
 
   static const TextStyle textBodyWhite = TextStyle(
@@ -22,11 +22,11 @@ class AppTypography{
     color: AppColors.white
   );
 
-  static const TextStyle textBodyPurpleSemiBold = TextStyle(
+  static const TextStyle textBodyGreenSemiBold = TextStyle(
     fontSize: textNormal,
     fontWeight: FontWeight.w600,
     fontFamily: fontName,
-    color: AppColors.purple
+    color: AppColors.green
   );
 
   static const TextStyle textBodyWhiteSemiBold = TextStyle(
@@ -36,11 +36,11 @@ class AppTypography{
     color: AppColors.white
   );
 
-  static const TextStyle textTitlePurpleSemiBold = TextStyle(
+  static const TextStyle textTitleGreenSemiBold = TextStyle(
     fontSize: textLarge,
     fontWeight: FontWeight.w600,
     fontFamily: fontName,
-    color: AppColors.purple
+    color: AppColors.green
   );
 
   static const TextStyle textTitleWhiteSemiBold = TextStyle(

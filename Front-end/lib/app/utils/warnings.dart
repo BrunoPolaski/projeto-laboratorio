@@ -1,3 +1,4 @@
+import 'package:app_facul/app/entities/models/notification_popup.dart';
 import 'package:app_facul/app/entities/models/popup_model.dart';
 import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
@@ -22,19 +23,13 @@ class Warnings{
 class ShowPopUp{
   static Future<bool?> alertPopUp(PopUp? popUp) async {
     popUp ??= Warnings.couldntFindData;
-    return showDialog<bool>
-    (
-      context: globals.navigatorKey.currentState!.overlay!.context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(popUp!.title),
-        content: Text(popUp.description),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
+    return showDialog<bool>(
+      barrierDismissible: false,
+      context: globals.navigatorKey.currentContext!,
+      builder: (BuildContext context) {
+        return NotificationPopUp(popUp: popUp!); 
+      }    
     );
+  
   }
 }

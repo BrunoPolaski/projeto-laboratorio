@@ -17,7 +17,7 @@ class ReceivedPaymentsModel{
     return ReceivedPaymentsModel(
       billId: json['billId'],
       debtor: json['debtor'],
-      paymentMode: json['paymentMode'],
+      paymentMode: json['paymentMode'] ?? "DEFAULT",
       totalValue: json['totalValue'],
       totalPaidAt: json['totalPaidAt'],
     );

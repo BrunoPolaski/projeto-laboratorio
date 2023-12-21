@@ -1,5 +1,6 @@
 import 'package:app_facul/app/presentation/themes/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget{
   final String? hintText;
@@ -10,6 +11,7 @@ class CustomTextField extends StatelessWidget{
   final Widget? prefixIcon;
   final BoxDecoration? decoration;
   final TextStyle? style;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextField({
     Key? key,
@@ -21,6 +23,7 @@ class CustomTextField extends StatelessWidget{
     this.prefixIcon,
     this.decoration,
     this.style,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -28,6 +31,8 @@ class CustomTextField extends StatelessWidget{
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      inputFormatters:
+        inputFormatters,
       validator: validator,
       style: style,
       decoration: InputDecoration(
@@ -40,7 +45,7 @@ class CustomTextField extends StatelessWidget{
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-            color: AppColors.purple,
+            color: AppColors.green,
           ),
         ),
         errorBorder: OutlineInputBorder(

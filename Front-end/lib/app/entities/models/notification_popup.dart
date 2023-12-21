@@ -13,7 +13,7 @@ class NotificationPopUp extends StatelessWidget {
         content: Text(popUp.description),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.pop(context, true),
             child: const Text('OK'),
           ),
         ],
